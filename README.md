@@ -28,40 +28,21 @@ Plataforma completa para gestão integral de licitações públicas com análise
 
 ---
 
-## 2. Criar os repositórios no GitHub
+## 2. Estrutura do repositório
 
-### 2.1 Backend
+Este repositório contém frontend e backend juntos:
 
-```bash
-cd licitagest/backend
-git init
-git add .
-git commit -m "feat: setup inicial do backend"
 ```
-
-Acesse github.com → **New repository** → nome: `licitagest-api` → **Create repository**
-
-```bash
-git remote add origin https://github.com/SEU_USUARIO/licitagest-api.git
-git branch -M main
-git push -u origin main
-```
-
-### 2.2 Frontend
-
-```bash
-cd ../frontend
-git init
-git add .
-git commit -m "feat: setup inicial do frontend"
-```
-
-Acesse github.com → **New repository** → nome: `licitagest-web` → **Create repository**
-
-```bash
-git remote add origin https://github.com/SEU_USUARIO/licitagest-web.git
-git branch -M main
-git push -u origin main
+licitagest-web/
+├── src/                  # Frontend React
+├── backend/              # Backend Node.js/Express
+│   ├── src/
+│   ├── migrations/       # SQL do banco de dados
+│   └── Procfile
+├── index.html
+├── package.json          # Frontend
+├── vite.config.js
+└── vercel.json           # Config de deploy Vercel
 ```
 
 ---
@@ -92,9 +73,10 @@ git push -u origin main
 ## 5. Deploy do backend (Railway)
 
 1. Acesse [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo**
-2. Selecione o repositório `licitagest-api`
-3. Railway detecta Node.js automaticamente e faz o primeiro deploy
-4. Vá em **Variables** e adicione todas as variáveis abaixo:
+2. Selecione o repositório `licitagest-web`
+3. Em **Settings → Root Directory** defina: `backend`
+4. Railway detecta Node.js automaticamente e faz o primeiro deploy
+5. Vá em **Variables** e adicione todas as variáveis abaixo:
 
 ```
 DATABASE_URL=postgresql://postgres:SENHA@db.REF.supabase.co:5432/postgres
@@ -110,8 +92,8 @@ NODE_ENV=production
 PORT=3000
 ```
 
-5. Vá em **Settings → Networking → Generate Domain** para obter a URL do backend
-6. Anote a URL (ex: `https://licitagest-api.up.railway.app`)
+6. Vá em **Settings → Networking → Generate Domain** para obter a URL do backend
+7. Anote a URL (ex: `https://licitagest-api.up.railway.app`)
 
 > **Worker**: Para rodar o worker de filas, vá em **New Service** dentro do mesmo projeto, conecte o mesmo repositório e defina o start command como `node src/workers/edital.worker.js`
 
